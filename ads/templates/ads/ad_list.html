@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Объявления</h1>
+
+<form method="get">
+    <input type="text" name="q" placeholder="Поиск..." value="{{ request.GET.q }}">
+    <input type="text" name="category" placeholder="Категория" value="{{ request.GET.category }}">
+    <input type="text" name="condition" placeholder="Состояние" value="{{ request.GET.condition }}">
+    <button type="submit">Фильтровать</button>
+</form>
+
+<ul>
+    {% for ad in page_obj %}
+        <li>
+            <strong>{{ ad.title }}</strong> ({{ ad.condition }})<br>
+            {{ ad.description|truncatewords:20 }}<br>
+            <em>Категория: {{ ad.category }}</em><br>
+            <small>Опубликовано: {{ ad.created_at }}</small>
+        </li>
+    {% empty %}
+        <li>Объявлений не найдено.</li>
+    {% endfor %}
+</ul>
+
+<div>
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">Назад</a>
+    {% endif %}
+    <span>Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Вперёд</a>
+    {% endif %}
+</div>
+
+{% endblock %}

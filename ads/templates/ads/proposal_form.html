@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Создать предложение обмена</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Отправить предложение</button>
+</form>
+
+<a href="{% url 'proposal_list' %}">Назад к предложениям</a>
+{% endblock %}

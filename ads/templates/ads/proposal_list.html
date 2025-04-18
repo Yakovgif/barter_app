@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Мои предложения обмена</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>От</th>
+            <th>Кому</th>
+            <th>Комментарий</th>
+            <th>Статус</th>
+            <th>Дата</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for proposal in proposals %}
+        <tr>
+            <td>{{ proposal.ad_sender.title }}</td>
+            <td>{{ proposal.ad_receiver.title }}</td>
+            <td>{{ proposal.comment|default:"-" }}</td>
+            <td>{{ proposal.get_status_display }}</td>
+            <td>{{ proposal.created_at }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5">Предложений нет</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url 'ad_list' %}">Вернуться к объявлениям</a>
+{% endblock %}
